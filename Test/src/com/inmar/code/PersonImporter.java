@@ -105,9 +105,7 @@ public class PersonImporter {
 		try {
 			String firstName = metadata[0];
 			String lastName = metadata[1];
-			UUID uUID = UUID.fromString(metadata[2]); // create and return
-														// Person of this
-														// metadata
+			UUID uUID = UUID.fromString(metadata[2]);// Convert String value to UUID.
 			return new Person(firstName, lastName, uUID);
 		} catch (java.lang.IllegalArgumentException e) {
 			e.printStackTrace();
@@ -127,10 +125,8 @@ public class PersonImporter {
 		try {
 			// Read JSON file
 			Object obj = jsonParser.parse(reader);
-
 			JSONArray personList = (JSONArray) obj;
 			System.out.println();
-
 			// Iterate over person array
 			Iterator<JSONObject> itr = personList.iterator();
 			while (itr.hasNext()) {
@@ -142,8 +138,6 @@ public class PersonImporter {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			throw new IllegalStateException("Invalid JSON: " + jsonParser, e);
