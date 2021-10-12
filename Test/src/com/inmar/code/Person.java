@@ -10,7 +10,6 @@ public class Person {
 	public UUID uuId;
 	
 	public Person(String firstName2, String lastName2, UUID uUID2) {
-		// TODO Auto-generated constructor stub
 		this.firstName=firstName2;
 		this.lastName=lastName2;
 		this.uuId=uUID2;

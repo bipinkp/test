@@ -73,16 +73,17 @@ public class PersonImporter {
 	 */
 	private static List<Person> csvFileParser(FileReader reader)
 			throws FileNotFoundException {
+		String line=null;
 		List<Person> persons = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(reader)) {
 			// read the first line from the text file
-			String line = br.readLine();
+			line = br.readLine();
 			// loop until all lines are read
 			while (line != null) {
 				// use string.split to load a string array with the values from
 				// each line of the file, using a comma as the delimiter
 				String[] attributes = line.split(",");
-				Person person = createPerson(attributes);
+				Person person = ValidateAndCreatePersonObject(attributes[0], attributes[1], attributes[2]);;
 				// adding Person into arrayList
 				if (person != null) {
 					persons.add(person);
@@ -94,25 +95,13 @@ public class PersonImporter {
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+		}catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.err.println("The UUID value is invalid for record:"+ line);
 		}
 		return persons;
 	}
 
-	/*
-	 * creating person from Array of strings
-	 */
-	private static Person createPerson(String[] metadata) {
-		try {
-			String firstName = metadata[0];
-			String lastName = metadata[1];
-			UUID uUID = UUID.fromString(metadata[2]);// Convert String value to UUID.
-			return new Person(firstName, lastName, uUID);
-		} catch (java.lang.IllegalArgumentException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
+	
 	/*
 	 * Parse json file. Handle exception based on json data.
 	 */
@@ -126,7 +115,6 @@ public class PersonImporter {
 			// Read JSON file
 			Object obj = jsonParser.parse(reader);
 			JSONArray personList = (JSONArray) obj;
-			System.out.println();
 			// Iterate over person array
 			Iterator<JSONObject> itr = personList.iterator();
 			while (itr.hasNext()) {
@@ -136,14 +124,12 @@ public class PersonImporter {
 					persons.add(person);
 				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			throw new IllegalStateException("Invalid JSON: " + jsonParser, e);
 		}
 		return persons;
-
 	}
 
 	/*
@@ -153,13 +139,29 @@ public class PersonImporter {
 		try {
 			// Get person object within list
 			JSONObject personObject = (JSONObject) person.get("person");
-			return new Person(personObject.get("firstName").toString(),
-					personObject.get("lastName").toString(),
-					UUID.fromString(personObject.get("uuId").toString()));
+			return ValidateAndCreatePersonObject(personObject.get("firstName").toString(),
+					personObject.get("lastName").toString(),personObject.get("uuId").toString());
 		} catch (java.lang.IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 		return null;
-
+	}
+	
+	/*
+	 * Creating person from jsonobject
+	 */
+	private static Person ValidateAndCreatePersonObject(String firstName, String lastName, String uuid) {
+		try {
+			if(firstName == null || firstName.length() == 0) {
+			    System.err.println("The first name value is null or empty for record:"+ firstName+":"+lastName+":"+uuid);
+		
+			} else if (uuid == null || uuid.length() == 0 ){
+				System.err.println("The UUID value is null or empty or record:"+ firstName+":"+lastName+":"+uuid);
+			} else
+			return new Person(firstName,lastName,UUID.fromString(uuid) );
+		} catch (java.lang.IllegalArgumentException e) {
+			e.printStackTrace();
+		}  
+		return null;
 	}
 }
