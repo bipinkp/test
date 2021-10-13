@@ -52,18 +52,18 @@ Condition:
 1. Compile the java class using json-simple-1.1.1.jar 
 
 ```
-javac -cp Lib\*.jar -d bin src\com\inmar\code\*.java
+javac -cp lib\*.jar -d bin src\com\inmar\code\*.java
 ````
 
 2. Running the java with input csv file
 
 ```
-java -cp bin;Lib\json-simple-1.1.1.jar com.inmar.code.PersonImporter person.csv
+java -cp bin;lib\json-simple-1.1.1.jar com.inmar.code.PersonImporter person.csv
 ```
 3. Running the java with input JSON file
 
 ```
-java -cp bin;Lib\json-simple-1.1.1.jar com.inmar.code.PersonImporter person.json
+java -cp bin;lib\json-simple-1.1.1.jar com.inmar.code.PersonImporter person.json
 ```
 
 ## Output
@@ -81,4 +81,4 @@ For Json:
 1. Handled invalid filename, empty filename, wrong UUID. etc
 2. Handled null pointer exception. 
 3. Error validations. 
-4. warning messagnes
+4. warning messages

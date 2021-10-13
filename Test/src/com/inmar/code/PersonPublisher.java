@@ -14,7 +14,9 @@ public class PersonPublisher {
 	}
 
 	public void publishMessage(Person person) {
-		System.out.println("FirstName : " + person.getFirstName()
-				+ "   LastName : " + person.getLastName());
+		if (person.getFirstName() != null && person.getLastName() != null) {
+			System.out.println("FirstName : " + person.getFirstName()
+					+ "   LastName : " + person.getLastName());
+		}
 	}
 }

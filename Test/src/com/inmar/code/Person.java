@@ -5,9 +5,9 @@ import java.util.UUID;
 /*Person Class, which has three member variables, a String for first name, a
 String for last name, and a UUID as a unique identifier*/
 public class Person {
-	public String lastName;
-	public String firstName;
-	public UUID uuId;
+	private String lastName;
+	private String firstName;
+	private UUID uuId;
 	
 	public Person(String firstName2, String lastName2, UUID uUID2) {
 		this.firstName=firstName2;
